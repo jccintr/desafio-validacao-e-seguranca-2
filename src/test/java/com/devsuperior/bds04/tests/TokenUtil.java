@@ -44,7 +44,6 @@ public class TokenUtil {
 				.perform(post("/oauth2/token")
 						.params(params)
 						.with(httpBasic(clientId, clientSecret))
-						//.with(httpBasic("myclientid", "myclientsecret"))
 						.accept("application/json;charset=UTF-8"))
 						.andExpect(status().isOk())
 						.andExpect(content().contentType("application/json;charset=UTF-8"));
