@@ -1,6 +1,8 @@
 package com.devsuperior.bds04.controllers;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -46,9 +48,9 @@ public class CityControllerIT {
 		clientPassword = "123456";
 		adminUsername = "bob@gmail.com";
 		adminPassword = "123456";
-		//clientToken = tokenUtil.obtainAccessToken(mockMvc, clientUsername, clientPassword);
-		//adminToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
-		//invalidToken = adminToken + "xpto"; // Simulates a wrong token
+		clientToken = tokenUtil.obtainAccessToken(mockMvc, clientUsername, clientPassword);
+		adminToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
+		invalidToken = adminToken + "xpto"; // Simulates a wrong token
 	}
 
 	@Test
@@ -59,14 +61,14 @@ public class CityControllerIT {
 		
 		ResultActions result =
 				mockMvc.perform(post("/cities")
-					.header("Authorization", "Bearer " + "xklvlkjdsvjeiweovslxckljsdfdsjlk")
+					.header("Authorization", "Bearer " + invalidToken)
 					.content(jsonBody)
 					.contentType(MediaType.APPLICATION_JSON)
 					.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isUnauthorized());
 	}
-	/*
+	
 	@Test
 	public void insertShouldReturn403WhenClientLogged() throws Exception {
 
@@ -131,5 +133,5 @@ public class CityControllerIT {
 		result.andExpect(jsonPath("$[1].name").value("Belém"));
 		result.andExpect(jsonPath("$[2].name").value("Brasília"));
 	}
-	*/
+	
 }

@@ -15,7 +15,8 @@ import org.springframework.util.MultiValueMap;
 
 @Component
 public class TokenUtil {
-/*
+
+	/*
 	@Value("${security.oauth2.client.client-id}")
 	private String clientId;
 
@@ -40,9 +41,10 @@ public class TokenUtil {
 		params.add("password", password);
 
 		ResultActions result = mockMvc
-				.perform(post("/oauth/token")
+				.perform(post("/oauth2/token")
 						.params(params)
 						.with(httpBasic(clientId, clientSecret))
+						//.with(httpBasic("myclientid", "myclientsecret"))
 						.accept("application/json;charset=UTF-8"))
 						.andExpect(status().isOk())
 						.andExpect(content().contentType("application/json;charset=UTF-8"));
